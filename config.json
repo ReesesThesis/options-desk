@@ -1,0 +1,17 @@
+{
+  "account_size": 2000,
+  "phase": 0,
+  "risk_per_trade_pct": 2.0,
+  "risk_per_trade_hard_cap_pct": 3.0,
+  "max_open_risk_pct": 10.0,
+  "max_open_positions": 4,
+  "weekly_drawdown_halt_pct": 6.0,
+  "monthly_drawdown_halt_pct": 10.0,
+  "fee_per_contract_leg": 0.60,
+  "fee_note": "Webull: $0 commission; per-contract exchange/regulatory fees estimated high on purpose. Check a real fill and update.",
+  "min_open_interest": 500,
+  "max_spread_pct_of_mid": 10.0,
+  "risk_free_rate": 0.04,
+  "broker": "webull",
+  "data_broker": "schwab"
+}

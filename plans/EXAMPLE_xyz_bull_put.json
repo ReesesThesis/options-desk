@@ -1,0 +1,26 @@
+{
+  "_note": "EXAMPLE with made-up numbers, to show the format. Not a recommendation.",
+  "ticker": "XYZ",
+  "structure": "bull put spread",
+  "as_of": "2026-10-14",
+  "spot": 104.20,
+  "thesis": "Holding above its 50-day average after a pullback; IV rank 62 so premium is rich; no earnings before expiration.",
+  "legs": [
+    {"action": "sell", "type": "put", "strike": 99, "expiry": "2026-11-20", "price": 1.30, "bid": 1.27, "ask": 1.33, "oi": 4200},
+    {"action": "buy",  "type": "put", "strike": 98, "expiry": "2026-11-20", "price": 0.85, "bid": 0.82, "ask": 0.88, "oi": 3100}
+  ],
+  "entry_limit": 0.42,
+  "take_profit_pct": 50,
+  "warning_level": 101.00,
+  "stop_level": 99.00,
+  "stop_direction": "below",
+  "time_stop_dte": 21,
+  "skip_if": ["XYZ opens below $102", "the earnings date moves before Nov 20"],
+  "why": ["$99 = short strike and the August swing low; a close below it breaks the thesis.",
+          "$101 = 50-day average: first sign the bounce is failing."],
+  "events": [
+    {"flag": "info", "text": "Earnings Dec 3 (after this trade expires)", "source": "company IR page"},
+    {"flag": "info", "text": "No 8-K, Form 4 or offering filings in the last 30 days", "source": "sec.gov"}
+  ],
+  "red_flags": ["Market-wide: CPI print Oct 15 can move everything for a day"]
+}
