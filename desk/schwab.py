@@ -2,7 +2,7 @@
 
 Environment variables (set in the cloud environment settings, never in chat or files):
   SCHWAB_APP_KEY, SCHWAB_APP_SECRET, SCHWAB_REFRESH_TOKEN
-  SCHWAB_REFRESH_ISSUED   date the refresh token was made (YYYY-MM-DD); Schwab refresh tokens
+  SCHWAB_REFRESH_ISSUED   date the refresh token was made (YYYY-MM-DD, or MMDDYYYY); Schwab refresh tokens
                           last 7 days, so the brief warns a day before it runs out.
 Allowed host needed: api.schwabapi.com
 
@@ -26,11 +26,18 @@ def basic_auth():
     return {"Authorization": "Basic " + base64.b64encode(raw).decode(),
             "Content-Type": "application/x-www-form-urlencoded"}
 
+def parse_issued(s):
+    """YYYY-MM-DD, or MMDDYYYY as typed in the environment settings (10152026)."""
+    s = s.strip()
+    if len(s) == 8 and s.isdigit() and not s.startswith(("19", "20")):
+        return dt.date(int(s[4:]), int(s[:2]), int(s[2:4]))
+    return dt.date.fromisoformat(s)
+
 def refresh_days_left(today=None):
     issued = os.environ.get("SCHWAB_REFRESH_ISSUED")
     if not issued:
         return None
-    return REFRESH_DAYS - ((today or dt.date.today()) - dt.date.fromisoformat(issued)).days
+    return REFRESH_DAYS - ((today or dt.date.today()) - parse_issued(issued)).days
 
 def access_token():
     global _token
@@ -52,6 +59,18 @@ def daily_closes(symbol, years=1):
     d = _get("/marketdata/v1/pricehistory", {"symbol": symbol.upper(), "periodType": "year",
                                               "period": years, "frequencyType": "daily", "frequency": 1})
     return [(dt.datetime.fromtimestamp(c["datetime"] / 1000).date(), c["close"]) for c in d["candles"]]
+
+def daily_bars(symbol, start, end=None):
+    """Daily OHLCV from start (date) to end (default today); dates are the trading day."""
+    ms = lambda d: int(dt.datetime(d.year, d.month, d.day, tzinfo=dt.timezone.utc).timestamp() * 1000)
+    end = end or dt.date.today() + dt.timedelta(days=1)
+    d = _get("/marketdata/v1/pricehistory", {"symbol": symbol.upper(), "periodType": "year",
+                                              "frequencyType": "daily", "frequency": 1,
+                                              "startDate": ms(start), "endDate": ms(end)})
+    # candles are stamped at midnight US Eastern (04:00/05:00 UTC); +6 h lands on the trading day
+    return [{"date": (dt.datetime.fromtimestamp(c["datetime"] / 1000, dt.timezone.utc) + dt.timedelta(hours=6)).date(),
+             "open": c["open"], "high": c["high"], "low": c["low"], "close": c["close"],
+             "volume": c["volume"]} for c in d.get("candles", [])]
 
 def chain(symbol, from_date=None, to_date=None, strike_count=30):
     """Option chain normalized to a flat list of contracts."""

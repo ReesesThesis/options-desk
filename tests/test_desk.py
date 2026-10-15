@@ -118,6 +118,8 @@ class TestParsers(unittest.TestCase):
     def test_refresh_days(self):
         os.environ["SCHWAB_REFRESH_ISSUED"] = "2026-10-10"
         self.assertEqual(schwab.refresh_days_left(dt.date(2026, 10, 16)), 1)
+        os.environ["SCHWAB_REFRESH_ISSUED"] = "10152026"
+        self.assertEqual(schwab.refresh_days_left(dt.date(2026, 10, 16)), 6)
         del os.environ["SCHWAB_REFRESH_ISSUED"]
 
     def test_sec_describe(self):
