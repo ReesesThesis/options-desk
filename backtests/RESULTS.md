@@ -8,6 +8,8 @@
 | R3 QQQ iron condor | same | 85 | **-$950** | -1.27 | **FAIL** |
 | R4 KO put credit spread | as R1a | 206 | **-$1,220** | -1.63 | **FAIL** |
 | R4 XLU put credit spread | as R1a | 211 | **-$1,486** | -2.05 | **FAIL** |
+| D1 KO, slippage 0 | as R4 KO, slippage 0 | - | (identical to R4 KO) | - | **INVALID**: file byte-identical to R4_KO.csv |
+| D2 KO, no % stop | as R4 KO, exit min -10 | 145 | **-$465** | -0.47 | FAIL, but the stop was costing ~$755 |
 
 ## What the trade logs show (2026-10-15, `analyze_tradelog.py` on results/R1a_SPY.csv, R1b_SPY.csv)
 
@@ -84,3 +86,13 @@ SPY condor -$720, QQQ condor -$820). Every verdict stays FAIL.
 +50% target or the 23-day hold; D1 = same as R4 KO with slippage 0, to see the edge before fill
 costs. A rule still has to pass at realistic fills; how realistic 75% is gets checked against real
 Webull fills in paper/1-lot trading.
+
+## Diagnostics on KO (2026-10-15)
+- **D1 is invalid.** ORATS's title said slip=0%, but its numbers and the downloaded trade log are
+  byte-identical to R4 KO (slippage 75). Either the slippage field was ignored or the wrong log was
+  downloaded. Until a run with a different slippage changes the result, **we don't know whether
+  ORATS applies the slippage field at all**, so the fill cost in every run so far is unverified.
+- **D2 (no %-stop):** 145 trades, -$465, win rate 87% (needs 91%), avg win +$7.77 / avg loss -$76.04,
+  -$88 before commissions, $377 commissions. 2024 positive, 2022-2023 the worst. Removing the
+  stop cut the loss by ~$755: the %-of-credit stop was most of the damage. Without it the rule is
+  roughly break-even before commissions, and commissions ($2.60 on an ~$18 credit, 14%) sink it.
