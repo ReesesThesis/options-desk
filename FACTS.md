@@ -13,6 +13,7 @@ and never let the owner spend money or place a trade on it until it's verified.
 | ORATS Custom Backtester: leg 1 DTE target cannot exceed 30 days | VERIFIED | owner (error message) | 2026-10-15 |
 | Whether Trading Tools also has an end-of-day backtester with data back to 2007 | UNVERIFIED | ORATS marketing; ask ORATS | 2026-10-15 |
 | ORATS "Trade % Slippage": slippage charged on entry AND exit as a % of the bid-ask width (75 = three quarters of the spread paid each side); defaults 75/66/55/53 for 1/2/3/4+ legs. ORATS "Exit Profit/Loss %" takes decimals (-0.5 = -50%, 0.5 = 50%) | VERIFIED | owner's screenshots of the tooltip and field hints | 2026-10-15 |
+| ORATS Custom Backtester appears to **ignore "Trade % Slippage"**: KO runs at 0%, 50% and 75% gave identical results (R4/D1 byte-identical logs; D2 75% and D3 50% both -$465, Sharpe -0.47). What fill model it really uses is unknown | VERIFIED (behavior) / UNVERIFIED (cause) | owner's screenshots and trade logs; ask ORATS support | 2026-10-15 |
 | Whether ORATS Exit Profit/Loss % is measured against the credit received (vs. max risk) | UNVERIFIED | read the Exit Profit/Loss (i) tooltip | 2026-10-15 |
 | Correction: an earlier entry said the $49 student price was for the Delayed Data API. Wrong: $49 is Trading Tools (no API). | - | - | 2026-10-15 |
 | ThetaData free tier: 1 year EOD options, ~20-30 requests/min; Value ~$40/mo (history from 2020) | UNVERIFIED | thetadata docs/pricing via search summary | 2026-10-15 |

@@ -9,6 +9,7 @@
 | R4 KO put credit spread | as R1a | 206 | **-$1,220** | -1.63 | **FAIL** |
 | R4 XLU put credit spread | as R1a | 211 | **-$1,486** | -2.05 | **FAIL** |
 | D1 KO, slippage 0 | as R4 KO, slippage 0 | - | (identical to R4 KO) | - | **INVALID**: file byte-identical to R4_KO.csv |
+| D3 KO, no stop, slippage 50 | as D2, slippage 50 | 145 | **-$465** | -0.47 | identical to D2 (slippage 75): slippage field ignored |
 | D2 KO, no % stop | as R4 KO, exit min -10 | 145 | **-$465** | -0.47 | FAIL, but the stop was costing ~$755 |
 
 ## What the trade logs show (2026-10-15, `analyze_tradelog.py` on results/R1a_SPY.csv, R1b_SPY.csv)
@@ -96,3 +97,10 @@ Webull fills in paper/1-lot trading.
   -$88 before commissions, $377 commissions. 2024 positive, 2022-2023 the worst. Removing the
   stop cut the loss by ~$755: the %-of-credit stop was most of the damage. Without it the rule is
   roughly break-even before commissions, and commissions ($2.60 on an ~$18 credit, 14%) sink it.
+
+## Slippage field (2026-10-15)
+D3 (slippage 50) matched D2 (slippage 75) exactly, and D1 (slippage 0) matched R4 KO exactly. The
+Custom Backtester isn't applying the slippage field, so **every run so far used ORATS's own,
+unknown fill model**, not the "harsh 75%" we set. Asked of ORATS: which fill price it uses (mid,
+bid/ask, or a default %). If it fills at mid, the losses happened even with ideal fills and the
+verdicts are stronger; if it fills at the bid/ask, they're harsher than real limit-order fills.
