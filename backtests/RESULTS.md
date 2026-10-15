@@ -10,6 +10,7 @@
 | R4 XLU put credit spread | as R1a | 211 | **-$1,486** | -2.05 | **FAIL** |
 | D1 KO, slippage 0 | as R4 KO, slippage 0 | - | (identical to R4 KO) | - | **INVALID**: file byte-identical to R4_KO.csv |
 | D3 KO, no stop, slippage 50 | as D2, slippage 50 | 145 | **-$465** | -0.47 | identical to D2 (slippage 75): slippage field ignored |
+| R7 SPY put credit spread, **$5 wide** | as R1a, $5 wide, no stop (min -10) | 143 | **-$51** | 0.03 | FAIL (break-even); each loss ~-$400 = 20% of the account |
 | D2 KO, no % stop | as R4 KO, exit min -10 | 145 | **-$465** | -0.47 | FAIL, but the stop was costing ~$755 |
 
 ## What the trade logs show (2026-10-15, `analyze_tradelog.py` on results/R1a_SPY.csv, R1b_SPY.csv)
@@ -106,3 +107,23 @@ engine uses its leg-count default, 66% for 2 legs and 53% for condors, i.e. each
 (condors 3%) of its bid-ask width worse than the mid, on entry and exit. So every
 run so far was priced at "a bit worse than mid", a moderate, realistic fill for a patient limit
 order, not the harsh 75% we intended. The verdicts stand: these rules lose at ordinary fills.
+
+## R7: SPY $5-wide, no stop (2026-10-15)
+| | R1a ($1 wide, stop) | R7 ($5 wide, no stop) |
+|---|---|---|
+| Trades | 203 | 143 |
+| Total | -$1,656 | **-$51** |
+| Win rate (needed) | 70% (84%) | 88% (88%) |
+| Avg win / avg loss | +$9 / -$50 | +$50 / -$373 |
+| Avg credit | $0.21 on $1 | $1.00 on $5 |
+| Before commissions | -$1,128 | +$320 |
+| Years | lost all 7 | 2022 -$988; 2025 -$132; others flat to +$420 |
+| Max drawdown (1 lot) | -$1,671 | -$1,922 |
+
+- Width matters: 5x wider took the loss from -$1,656 to break-even. But the rule only made
+  +$320 before commissions over 6 years: no edge worth trading.
+- Every loss was close to the full width (16 trades at -$405 to -$432), and 2022 alone lost $988.
+  At $2,000 one loss is 20% of the account and the drawdown is 96%: not tradable at this size
+  even if it were profitable.
+- So it isn't only account size: 30-delta, 30-DTE put spreads on SPY were about break-even after
+  realistic costs in 2020-2026.
