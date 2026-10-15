@@ -101,6 +101,8 @@ Webull fills in paper/1-lot trading.
 ## Slippage field (2026-10-15)
 D3 (slippage 50) matched D2 (slippage 75) exactly, and D1 (slippage 0) matched R4 KO exactly. The
 Custom Backtester isn't applying the slippage field, so **every run so far used ORATS's own,
-unknown fill model**, not the "harsh 75%" we set. Asked of ORATS: which fill price it uses (mid,
-bid/ask, or a default %). If it fills at mid, the losses happened even with ideal fills and the
-verdicts are stronger; if it fills at the bid/ask, they're harsher than real limit-order fills.
+unknown fill model**, not the "harsh 75%" we set. **ORATS's answer (Otto, 2026-10-15):** the
+engine uses its leg-count default, 66% for 2 legs and 53% for condors, i.e. each leg fills 16%
+(condors 3%) of its bid-ask width worse than the mid, on entry and exit. So every
+run so far was priced at "a bit worse than mid", a moderate, realistic fill for a patient limit
+order, not the harsh 75% we intended. The verdicts stand: these rules lose at ordinary fills.
