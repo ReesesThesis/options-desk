@@ -18,6 +18,20 @@ Bring him **one decided trade or "no trade"**, never a menu of options.
 - Every number on a card comes from code on real quotes (`desk/`), never from memory. Missing data
   is written "MISSING", and the trade waits.
 
+## Getting facts right (owner, 2026-10-15, after a $49 promo price was passed off as the list price)
+
+- Any outside fact that costs money, sets a limit, or affects a trade (prices, plan limits, broker
+  rules, API details, earnings dates) goes in `FACTS.md` with its source and status. Look there first.
+- Say how you know: "verified on <official page> today", or say plainly "UNVERIFIED" in bold.
+  Search summaries, third-party sites and memory are UNVERIFIED. Discounts and promos are not prices.
+- If the official page won't load from the cloud, say so and ask the owner to read it; don't fill
+  the gap with a secondhand number.
+- Before the owner spends money or enters a trade, list every UNVERIFIED fact it depends on.
+- Trade cards: the owner checks Webull's own max profit / max loss / breakeven on the order screen
+  against the card before submitting. If they differ by more than $2, don't send it; tell Claude.
+- Market data: a quote older than 20 minutes, or Schwab and ORATS disagreeing on a mid by more than
+  10%, is printed on the card as a warning, and the trade waits.
+
 ## Risk rules (enforced in `desk/risk.py`; change only on the owner's word)
 
 - Size on the full worst case incl. round-trip fees: 2% target ($40), **3% hard cap ($60)** per trade.
