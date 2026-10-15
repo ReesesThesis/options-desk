@@ -19,7 +19,7 @@ history and earnings dates is connected. Run R1, R3 and R5 first.
 ### R1 on the Custom Backtester screen
 - Symbol **SPY** (not SPX: SPX strikes are $5 apart and 10x the size), strategy Put Credit Spread.
 - Date: **All** through the latest date. Time: **10:00am** entry. Expiry: Both.
-- Days to Expiration: target 45, min 35, max 50. DTE diff 0.
+- Days to Expiration: target **30**, min **25**, max **30** (this backtester caps leg 1 at 30 DTE). DTE diff 0.
 - Strike Selection, leg 1 (short put): delta target 0.30, min 0.25, max 0.35.
   Leg 2 (long put): pts OTM **1** from Ref Leg 1 (a $1-wide spread). Ratio -1 / 1.
 - Days to Expiration, DTE DIFF for leg 2: **0 / 0 / 0** (same expiration as leg 1; anything else
@@ -28,10 +28,11 @@ history and earnings dates is connected. Run R1, R3 and R5 first.
   On a $1-wide spread a -2 stop may sit beyond the max loss and never fire; R1b shows the effect of
   a tighter stop.
 - Trade % Slippage: **75** (worse than the 66 default for 2 legs, on purpose). Commission 0.65.
-- Max Hold Days: **24** (45 DTE minus the 21-DTE exit).
+- Max Hold Days: **23** (exit with about 7 days left, before the last week's gamma risk).
+  If a 30-DTE rule passes, the live time stop becomes 7 DTE to match what was tested.
 - Wide Bid Ask Filter: leave 5 / 15.
 R3: same, strategy Iron Condor, both short legs delta ~0.16 (0.12-0.20), wings 1 pt.
-R5: strategy Long Call, delta 0.50 (0.45-0.55), Exit P/L max 0.5 min -0.5, slippage 75, Max Hold Days 24.
+R5: strategy Long Call, delta 0.50 (0.45-0.55), Exit P/L max 0.5 min -0.5, slippage 75, Max Hold Days 23.
 
 ## Same settings for every run
 - Dates: earliest available (2007 if offered) through the latest date.
