@@ -6,6 +6,8 @@
 | R1b SPY put credit spread | same as R1a, exit -100% | 262 | **-$1,846** | -2.33 | **FAIL**: tighter stop is worse |
 | R3 SPY iron condor | 30 DTE, shorts 0.16 delta, $1 wings, exit +50% / -200%, hold 23d, slippage 75% | 113 | **-$779** | -0.95 | **FAIL** |
 | R3 QQQ iron condor | same | 85 | **-$950** | -1.27 | **FAIL** |
+| R4 KO put credit spread | as R1a | 206 | **-$1,220** | -1.63 | **FAIL** |
+| R4 XLU put credit spread | as R1a | 211 | **-$1,486** | -2.05 | **FAIL** |
 
 ## What the trade logs show (2026-10-15, `analyze_tradelog.py` on results/R1a_SPY.csv, R1b_SPY.csv)
 
@@ -59,3 +61,26 @@ SPY's condor is nearly break-even before commissions, so on SPY/QQQ the issue is
 $1-wide spread's exit was sometimes priced above $1 (impossible with a combo order). It happened on
 1-3 trades per run; correcting it changes the totals by $20-130 (R1a -$1,625, R1b -$1,826,
 SPY condor -$720, QQQ condor -$820). Every verdict stays FAIL.
+
+## KO and XLU (R4, 2026-10-15)
+| | KO | XLU |
+|---|---|---|
+| Win rate (needed) | 69% (82%) | 66% (82%) |
+| Avg win / avg loss | +$8.26 / -$38.11 | +$8.03 / -$36.76 |
+| Avg credit on $1 | $0.187 (long leg ~0.21 delta) | $0.181 |
+| Before commissions | -$684 | -$937 |
+| Stopped out within 1 day of entry | 10 trades, -$257 | 20 trades, -$511 |
+
+- XLU split about 2-for-1 between 2025-11-24 ($87.84) and 2025-12-18 ($43.00); no trade spans it, so
+  the results aren't affected.
+- Even where $1 is 1-2% of the price, credits after fills are ~$0.18-0.19. The fills (75% of each
+  leg's bid-ask, charged on entry and again on exit) cost about as much as the credit.
+- **The %-of-credit stop fires on fill noise:** XLU trade 188 (2025-11-24) was stopped out the same
+  day while XLU went *up*, because entry+exit slippage alone exceeded the -200% stop on a $0.10
+  credit. 9-38 trades per run were stopped within a day. Our live rule is a stop on the *stock
+  price*, which this backtester can't model, so these runs test a stop we wouldn't use.
+
+**Next (diagnostics, not pass/fail):** on KO, D2 = no %-stop (MIN -10, the field's floor), exits by
++50% target or the 23-day hold; D1 = same as R4 KO with slippage 0, to see the edge before fill
+costs. A rule still has to pass at realistic fills; how realistic 75% is gets checked against real
+Webull fills in paper/1-lot trading.
