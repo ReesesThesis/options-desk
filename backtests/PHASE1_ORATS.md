@@ -9,6 +9,26 @@ fill price (mid vs. bid-ask), earnings avoidance, IV rank filter, profit target 
 exit at N days to expiration, and an export of the full trade list (CSV). Anything missing changes
 the rules below, so stop and tell Claude before running.
 
+## What Step 0 found (2026-10-15)
+The Custom Backtester's data starts in **2020**. That still covers the 2020 crash, the 2022 bear
+market and the April 2025 sell-off, but not 2008, so the pass bar below requires each rule to be
+looked at in 2020 and 2022 on their own. It has no IV-rank or earnings filter on screen; R2 and R4's
+filters will come from a signal CSV (entry dates) that Claude builds, once a data source for IV
+history and earnings dates is connected. Run R1, R3 and R5 first.
+
+### R1 on the Custom Backtester screen
+- Symbol **SPY** (not SPX: SPX strikes are $5 apart and 10x the size), strategy Put Credit Spread.
+- Date: **All** through the latest date. Time: **10:00am** entry. Expiry: Both.
+- Days to Expiration: target 45, min 35, max 50. DTE diff 0.
+- Strike Selection, leg 1 (short put): delta target 0.30, min 0.25, max 0.35.
+  Leg 2 (long put): pts OTM **1** from Ref Leg 1 (a $1-wide spread). Ratio -1 / 1.
+- Exit Profit/Loss %: max **50**, min **-200** (only if the (i) tooltip says it's % of the credit).
+- Trade % Slippage: leave 66 unless the tooltip shows a worse-fill option. Commission 0.65.
+- Max Hold Days: **24** (45 DTE minus the 21-DTE exit).
+- Wide Bid Ask Filter: leave 5 / 15.
+R3: same, strategy Iron Condor, both short legs delta ~0.16 (0.12-0.20), wings 1 pt.
+R5: strategy Long Call, delta 0.50 (0.45-0.55), Exit P/L max 50 min -50, Max Hold Days 24.
+
 ## Same settings for every run
 - Dates: earliest available (2007 if offered) through the latest date.
 - Commission: **$0.60 per contract per leg**, each way (the Webull fee estimate in config.json).
