@@ -34,6 +34,18 @@ history and earnings dates is connected. Run R1, R3 and R5 first.
 R3: same, strategy Iron Condor, both short legs delta ~0.16 (0.12-0.20), wings 1 pt.
 R5: strategy Long Call, delta 0.50 (0.45-0.55), Exit P/L max 0.5 min -0.5, slippage 75, Max Hold Days 23.
 
+### Next runs (2026-10-15, after R1a/R1b)
+R1 failed because $1 is too narrow on a $600 stock (see RESULTS.md). Single stocks and cheaper ETFs,
+where $1 is 1-3% of the price, are the next test. Same settings as R1a (30/25/30 DTE, short put
+0.30 delta, long put 1 pt lower, exit +0.5 / -2, slippage 75, commission 0.65, hold 23), symbol only:
+- **R4 (stocks the owner wants to trade):** KO, XLU (utilities ETF), plus 2-3 more he picks
+  (e.g. PEP, DUK, SO, JPM). First check each in ORATS: price roughly $30-120 and strikes $1 apart.
+  No earnings filter on this screen, so this is the unfiltered baseline; earnings inside a trade can
+  hurt it. The filtered version (signal CSV of entry dates that skip earnings) comes once SEC access
+  gives us earnings dates.
+- **R6 (cheaper ETFs):** XLF, EEM (or SLV / GDX), if their prices fit.
+- **R5:** long call control on SPY. R3 (condors on SPY/QQQ/IWM) is dropped: same width problem, 4 legs.
+
 ## Same settings for every run
 - Dates: earliest available (2007 if offered) through the latest date.
 - Commission: **$0.60 per contract per leg**, each way (the Webull fee estimate in config.json).
