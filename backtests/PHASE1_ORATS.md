@@ -22,12 +22,16 @@ history and earnings dates is connected. Run R1, R3 and R5 first.
 - Days to Expiration: target 45, min 35, max 50. DTE diff 0.
 - Strike Selection, leg 1 (short put): delta target 0.30, min 0.25, max 0.35.
   Leg 2 (long put): pts OTM **1** from Ref Leg 1 (a $1-wide spread). Ratio -1 / 1.
-- Exit Profit/Loss %: max **50**, min **-200** (only if the (i) tooltip says it's % of the credit).
-- Trade % Slippage: leave 66 unless the tooltip shows a worse-fill option. Commission 0.65.
+- Days to Expiration, DTE DIFF for leg 2: **0 / 0 / 0** (same expiration as leg 1; anything else
+  makes it a diagonal).
+- Exit Profit/Loss % takes decimals: max **0.5**, min **-2** (R1a) and a second run with min **-1** (R1b).
+  On a $1-wide spread a -2 stop may sit beyond the max loss and never fire; R1b shows the effect of
+  a tighter stop.
+- Trade % Slippage: **75** (worse than the 66 default for 2 legs, on purpose). Commission 0.65.
 - Max Hold Days: **24** (45 DTE minus the 21-DTE exit).
 - Wide Bid Ask Filter: leave 5 / 15.
 R3: same, strategy Iron Condor, both short legs delta ~0.16 (0.12-0.20), wings 1 pt.
-R5: strategy Long Call, delta 0.50 (0.45-0.55), Exit P/L max 50 min -50, Max Hold Days 24.
+R5: strategy Long Call, delta 0.50 (0.45-0.55), Exit P/L max 0.5 min -0.5, slippage 75, Max Hold Days 24.
 
 ## Same settings for every run
 - Dates: earliest available (2007 if offered) through the latest date.

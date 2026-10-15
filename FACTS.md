@@ -11,7 +11,8 @@ and never let the owner spend money or place a trade on it until it's verified.
 | ORATS real-time data / brokerage connection: +$50/mo on Trading Tools | VERIFIED | same screenshot | 2026-10-15 |
 | ORATS Custom Backtester (dashboard.orats.com/backtesting/custom) data starts 2020 (owner); it is the intraday backtester (entry time of day), fields: DTE target/min/max, delta target/min/max, leg 2 "pts OTM" from leg 1, Exit Profit/Loss % min/max, Trade % Slippage (default 66), Commission $/contract (default 0.65), Max Hold Days, wide bid-ask filter, Upload signal CSV for custom entry dates. No IV-rank or earnings filter seen on that screen | VERIFIED | owner's screenshot | 2026-10-15 |
 | Whether Trading Tools also has an end-of-day backtester with data back to 2007 | UNVERIFIED | ORATS marketing; ask ORATS | 2026-10-15 |
-| Meaning of ORATS "Exit Profit/Loss %" (% of credit?) and "Trade % Slippage" (66 = ?) | UNVERIFIED | read the (i) tooltips | 2026-10-15 |
+| ORATS "Trade % Slippage": slippage charged on entry AND exit as a % of the bid-ask width (75 = three quarters of the spread paid each side); defaults 75/66/55/53 for 1/2/3/4+ legs. ORATS "Exit Profit/Loss %" takes decimals (-0.5 = -50%, 0.5 = 50%) | VERIFIED | owner's screenshots of the tooltip and field hints | 2026-10-15 |
+| Whether ORATS Exit Profit/Loss % is measured against the credit received (vs. max risk) | UNVERIFIED | read the Exit Profit/Loss (i) tooltip | 2026-10-15 |
 | Correction: an earlier entry said the $49 student price was for the Delayed Data API. Wrong: $49 is Trading Tools (no API). | - | - | 2026-10-15 |
 | ThetaData free tier: 1 year EOD options, ~20-30 requests/min; Value ~$40/mo (history from 2020) | UNVERIFIED | thetadata docs/pricing via search summary | 2026-10-15 |
 | Schwab Trader API - Individual: must **request access** to the product before creating an app | VERIFIED | owner, developer.schwab.com | 2026-10-15 |
