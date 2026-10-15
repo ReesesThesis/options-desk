@@ -1,0 +1,42 @@
+# Phase 1 backtests in ORATS Trading Tools (owner runs them; Claude grades them)
+
+ORATS's backtester screen hasn't been seen yet, so the setting names below are descriptive, not
+ORATS's labels. **Step 0 first**, then the runs.
+
+## Step 0: check the settings screen (send a screenshot)
+Confirm the backtester lets you set: date range back to 2007, commission per contract, slippage /
+fill price (mid vs. bid-ask), earnings avoidance, IV rank filter, profit target %, stop loss %,
+exit at N days to expiration, and an export of the full trade list (CSV). Anything missing changes
+the rules below, so stop and tell Claude before running.
+
+## Same settings for every run
+- Dates: earliest available (2007 if offered) through the latest date.
+- Commission: **$0.60 per contract per leg**, each way (the Webull fee estimate in config.json).
+- Fills: the **worst** realistic option offered (e.g. 50-75% of the way from mid to the bid/ask).
+  If it offers both "mid" and something worse, run the worse one.
+- Entries: every week (or the closest setting), so there are 100+ trades.
+- Export: the **full trade list as CSV** plus the summary screen. Upload both to GitHub:
+  options-desk > `backtests/results/` > Add file > Upload files, named like `R1_SPY.csv`.
+
+## The rules
+| # | Rule | Tickers | Entry | Exit |
+|---|---|---|---|---|
+| R1 | Bull put spread | SPY | 45 DTE (range 35-50); short put ~0.30 delta; long put next strike down ($1-$2 wide) | 50% of max profit, OR loss = 2x the credit, OR 21 DTE |
+| R2 | R1 + volatility filter | SPY | same as R1, only when IV rank > 30 | same as R1 |
+| R3 | Iron condor | SPY, QQQ, IWM (one run each) | 45 DTE; short call and put ~0.16 delta; wings $1-$2 wide | 50% of max profit, OR loss = 2x credit, OR 21 DTE |
+| R4 | Bull put spread on stocks | AAPL, MSFT, AMZN, JPM, KO (one run each) | 35-45 DTE; short put ~0.25 delta; $1 wide; IV rank > 40; **no earnings before expiration** | 50% profit, OR loss = 2x credit, OR 21 DTE |
+| R5 | Control: what most retail traders do | SPY | buy a 0.50 delta call, 45 DTE | +50% profit, OR -50% loss, OR 21 DTE |
+
+R5 isn't a candidate: it's there to see how much worse the usual retail trade does under the same
+costs. The "follow the flow" test is skipped: ORATS has no options-flow history (FACTS.md).
+
+## Pass bar (Claude applies it to the CSVs)
+A rule passes only if all hold, after commissions and fills:
+1. 100+ trades.
+2. Positive average profit per trade (expectancy), and the profit factor is above 1.2.
+3. Profitable in at least 2 of every 3 calendar years, and 2008, 2020 and 2022 are each looked at
+   on their own (a rule that only works in calm years fails).
+4. Worst losing streak and worst drawdown, scaled to 1 contract at $2,000, stay under the
+   weekly/monthly halt levels often enough to keep trading (Claude shows the numbers).
+5. Not just one lucky ticker: R3/R4 need most of their tickers positive.
+If nothing passes, the answer is "no trade-worthy rule yet", and that's a useful result.
