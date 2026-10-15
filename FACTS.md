@@ -7,10 +7,10 @@ and never let the owner spend money or place a trade on it until it's verified.
 
 | Fact | Status | Source / who checked | Date |
 |---|---|---|---|
-| ORATS Delayed Data API is **$99/mo** list; **$49/mo** only with student discount (or partner promo pages) | VERIFIED | owner, on orats.com | 2026-10-15 |
-| ORATS student plan data is ~15 min delayed; real-time needs a paid tier | VERIFIED | owner | 2026-10-15 |
-| ORATS Delayed API limit 20,000 requests/month; EOD history since 2007 | UNVERIFIED | orats.com/ai-agents via search summary | 2026-10-15 |
-| ORATS full history one-time $399 (FTP) | UNVERIFIED | orats.com via search summary | 2026-10-15 |
+| ORATS student pricing (orats.com/student, all shown as discounts): **Trading Tools $49/mo** = web app only (Options Backtester 2,000 backtests/mo, scanners, trade builder; no API); **Delayed Data API $99/mo** = the API our code can call (20,000 requests/mo, near-EOD history back to 2007, IV rank + history, earnings history); **Historical Data $399** one-time (2007-present, 5,000+ symbols, AWS S3 download open 14 days) or $399/yr recurring | VERIFIED | owner's screenshot of orats.com/student | 2026-10-15 |
+| ORATS real-time data / brokerage connection: +$50/mo on Trading Tools | VERIFIED | same screenshot | 2026-10-15 |
+| ORATS Trading Tools backtester uses history back to 2007 and models fills/commissions we can set | UNVERIFIED | ORATS marketing | 2026-10-15 |
+| Correction: an earlier entry said the $49 student price was for the Delayed Data API. Wrong: $49 is Trading Tools (no API). | - | - | 2026-10-15 |
 | ThetaData free tier: 1 year EOD options, ~20-30 requests/min; Value ~$40/mo (history from 2020) | UNVERIFIED | thetadata docs/pricing via search summary | 2026-10-15 |
 | Schwab Trader API - Individual: must **request access** to the product before creating an app | VERIFIED | owner, developer.schwab.com | 2026-10-15 |
 | Schwab app needs both "Accounts and Trading Production" and "Market Data Production" | UNVERIFIED | memory | 2026-10-15 |
