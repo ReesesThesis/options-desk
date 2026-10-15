@@ -4,6 +4,8 @@
 |---|---|---|---|---|---|
 | R1a SPY put credit spread | 30 DTE, short 0.30 delta, $1 wide, exit +50% / -200%, hold 24d, slippage 75%, $0.65/contract | 203 | **-$1,656** | -1.75 | **FAIL** (negative after costs) |
 | R1b SPY put credit spread | same as R1a, exit -100% | 262 | **-$1,846** | -2.33 | **FAIL**: tighter stop is worse |
+| R3 SPY iron condor | 30 DTE, shorts 0.16 delta, $1 wings, exit +50% / -200%, hold 23d, slippage 75% | 113 | **-$779** | -0.95 | **FAIL** |
+| R3 QQQ iron condor | same | 85 | **-$950** | -1.27 | **FAIL** |
 
 ## What the trade logs show (2026-10-15, `analyze_tradelog.py` on results/R1a_SPY.csv, R1b_SPY.csv)
 
@@ -16,7 +18,7 @@
 | Avg win / avg loss | +$9.43 / -$50.08 | +$9.52 / -$27.89 |
 | Win rate needed to break even | 84% | 75% |
 | Avg credit on a $1-wide spread | $0.21 | $0.21 |
-| P/L before commissions (fills incl. 75% slippage) | -$1,165 | -$1,198 |
+| P/L before commissions (fills incl. 75% slippage) | -$1,128 | -$1,165 |
 | Commissions | ~$528 | ~$681 |
 | Losing years | all 7 (2020-2026) | 6 of 7 |
 
@@ -39,3 +41,21 @@ Earlier notes on R1a (from the summary screenshot):
 
 R1b vs R1a: the tighter stop lost $190 more. Stops on short premium often sell at the worst moment
 (after a dip that then recovers); keep the wider stop as the default for later tests.
+
+## Iron condors (R3, 2026-10-15)
+| | SPY | QQQ |
+|---|---|---|
+| Win rate (needed to break even) | 77% (86%) | 73% (88%) |
+| Avg win / avg loss | +$10.61 / -$65.48 | +$9.52 / -$66.96 |
+| Avg credit (both sides, $1 wings) | $0.26 | $0.27 |
+| P/L before commissions | -$192 | -$508 |
+| Commissions (4 legs) | $588 | $442 |
+| Years | lost 2022-2025 | lost every year but 2020 |
+
+Same structural problem as R1: ~$26 collected against ~$74 at risk, and commissions double with 4 legs.
+SPY's condor is nearly break-even before commissions, so on SPY/QQQ the issue is mostly cost.
+
+**Backtester artifact checked:** ORATS applies slippage to each leg separately, so in a fast market a
+$1-wide spread's exit was sometimes priced above $1 (impossible with a combo order). It happened on
+1-3 trades per run; correcting it changes the totals by $20-130 (R1a -$1,625, R1b -$1,826,
+SPY condor -$720, QQQ condor -$820). Every verdict stays FAIL.

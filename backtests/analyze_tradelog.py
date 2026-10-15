@@ -1,30 +1,50 @@
-"""Summarize a 2-leg ORATS trade log: python3 backtests/analyze_tradelog.py backtests/results/R1a_SPY.csv ..."""
-import csv, sys, collections
-for f, name in [(p, p) for p in sys.argv[1:]]:
-    rows=list(csv.DictReader(open(f)))
-    T=collections.OrderedDict()
-    for r in rows:
-        t=T.setdefault(r["tradeId"],{"legs":[]}); t["legs"].append(r)
-    out=[]
-    for tid,t in T.items():
-        L=t["legs"]; p=sum(float(x["profit"]) for x in L)
-        sh=[x for x in L if x["ratio"].startswith("-")][0]; lg=[x for x in L if not x["ratio"].startswith("-")][0]
-        credit=float(sh["tradeOptPx"])-float(lg["tradeOptPx"])
-        exitc=float(sh["exitOptionPx"])-float(lg["exitOptionPx"])
-        width=float(sh["strike"])-float(lg["strike"])
-        out.append(dict(date=sh["date"],exit=sh["exitDate"],p=p,credit=credit,exitc=exitc,width=width,reason=sh["exitReason"],year=sh["date"][:4],gross=(credit-exitc)*100))
-    n=len(out); P=[o["p"] for o in out]; W=[x for x in P if x>0]; Ls=[x for x in P if x<=0]
-    print(f"\n=== {name}: {n} trades, total ${sum(P):.0f}, avg ${sum(P)/n:.2f}/trade")
-    print(f"win rate {len(W)/n:.0%}, avg win ${sum(W)/len(W):.2f}, avg loss ${sum(Ls)/len(Ls):.2f}, worst ${min(P):.2f}")
-    print(f"avg credit ${sum(o['credit'] for o in out)/n:.3f} on avg width ${sum(o['width'] for o in out)/n:.2f}")
-    g=sum(o['gross'] for o in out); print(f"gross (price change only, fills as logged) ${g:.0f}; commissions ~${n*2.6:.0f}; total ${sum(P):.0f}")
-    print("exit reasons", collections.Counter(o["reason"] for o in out))
-    by=collections.defaultdict(list)
-    for o in out: by[o["year"]].append(o["p"])
-    for y in sorted(by): print(f"  {y}: {len(by[y]):3d} trades  ${sum(by[y]):8.0f}  win {sum(1 for x in by[y] if x>0)/len(by[y]):.0%}")
-    # running drawdown 1 lot sequential (ignoring overlap)
-    eq=0;pk=0;dd=0;streak=0;ms=0
+"""Summarize ORATS Custom Backtester trade logs (any number of legs).
+
+    python3 backtests/analyze_tradelog.py backtests/results/R1a_SPY.csv [more.csv ...]
+
+Per trade: net credit (+) or debit (-) at entry from the logged fills (slippage included),
+P/L after commissions (ORATS's `profit` column), and yearly / exit-reason breakdowns.
+"""
+import collections, csv, sys
+
+COMMISSION = 0.65
+
+def trades(path):
+    T = collections.OrderedDict()
+    for r in csv.DictReader(open(path)):
+        T.setdefault(r["tradeId"], []).append(r)
+    out = []
+    for legs in T.values():
+        q = lambda r: float(r["ratio"])
+        net = sum(-q(r) * float(r["tradeOptPx"]) for r in legs)          # + = credit
+        p = sum(float(r["profit"]) for r in legs)
+        n_contracts = sum(abs(q(r)) for r in legs)
+        out.append({"date": legs[0]["date"], "year": legs[0]["date"][:4], "p": p, "net": net,
+                    "fees": n_contracts * COMMISSION * 2, "reason": legs[0]["exitReason"],
+                    "legs": len(legs)})
+    return out
+
+def report(path):
+    out = trades(path)
+    n = len(out); P = [o["p"] for o in out]
+    W = [x for x in P if x > 0]; L = [x for x in P if x <= 0]
+    aw = sum(W) / len(W) if W else 0; al = sum(L) / len(L) if L else 0
+    fees = sum(o["fees"] for o in out)
+    print(f"\n=== {path}: {n} trades ({out[0]['legs']} legs), total ${sum(P):.0f}, avg ${sum(P) / n:.2f}/trade")
+    print(f"win rate {len(W) / n:.0%} (break-even needs {(-al) / (aw - al):.0%}), avg win ${aw:.2f}, avg loss ${al:.2f}, worst ${min(P):.2f}")
+    print(f"avg entry {'credit' if out[0]['net'] > 0 else 'net'} ${sum(o['net'] for o in out) / n:.3f}/share; "
+          f"before commissions ${sum(P) + fees:.0f}, commissions ${fees:.0f}")
+    print("exits:", dict(collections.Counter(o["reason"] for o in out)))
+    by = collections.defaultdict(list)
+    for o in out:
+        by[o["year"]].append(o["p"])
+    print("  " + "  ".join(f"{y}: ${sum(v):.0f} ({len(v)})" for y, v in sorted(by.items())))
+    eq = pk = dd = 0; streak = ms = 0
     for x in P:
-        eq+=x;pk=max(pk,eq);dd=min(dd,eq-pk)
-        streak=streak+1 if x<=0 else 0; ms=max(ms,streak)
-    print(f"max drawdown ${dd:.0f}, longest losing streak {ms}")
+        eq += x; pk = max(pk, eq); dd = min(dd, eq - pk)
+        streak = streak + 1 if x <= 0 else 0; ms = max(ms, streak)
+    print(f"max drawdown ${dd:.0f} (1 lot, trades in sequence), longest losing streak {ms}")
+
+if __name__ == "__main__":
+    for p in sys.argv[1:]:
+        report(p)
