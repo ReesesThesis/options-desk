@@ -48,6 +48,7 @@ and never let the owner spend money or place a trade on it until it's verified.
 | SPMO (Invesco S&P 500 Momentum ETF) and MTUM (iShares MSCI USA Momentum Factor ETF): price history from Schwab (in backtests/data/). Their expense ratios, holdings rules and rebalancing schedule are **UNVERIFIED**: read the issuer's fund page before buying | Prices VERIFIED (Schwab); fund details **UNVERIFIED** | Schwab API | 2026-10-16 |
 | Webull fractional shares for ETFs (needed to split a few hundred dollars across funds) | **UNVERIFIED** | memory | 2026-10-16 |
 | Owner's first holdings (Webull, filled 2026-10-16): 2 SPY @ $762.49 and 2 SPMO @ $140.93, $1,806.84 total (84.4% / 15.6%). Fills fall inside each fund's 2026-10-16 range on Schwab (SPY 760.64-773.25, SPMO 140.64-143.58). Log: journal/holdings.csv | VERIFIED (owner's fills; range checked on Schwab) | owner + Schwab API | 2026-10-16 |
+| Owner's XLU Jan 21 2028 $50 calls: 2 contracts bought 2026-09-30 09:30:10 ET @ $0.91 ($182, limit $0.96, fee est. $0.09). On 2026-10-16 Webull: mid $1.35 (bid 1.30/ask 1.40), value $270, +$88 (+48%), delta 0.287, theta -0.003, breakeven $50.91, IV 18.62%. Schwab same strike: 1.30/1.40, delta 0.248, IV field 21.7% (Schwab's IV field runs off; see the KO entry) | VERIFIED | owner's Webull screenshots + Schwab API | 2026-10-16 |
 
 Research claims used in CLAUDE.md (retail option losses, Pan & Poteshman, variance risk premium)
 come from paper abstracts and secondary summaries; cite them as such.

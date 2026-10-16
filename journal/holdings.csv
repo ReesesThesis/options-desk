@@ -1,3 +1,4 @@
 date,action,symbol,shares,price,amount,note
 2026-10-16,buy,SPY,2,762.49,1524.98,core (plan: briefs/2026-10-16_what_to_buy.md)
 2026-10-16,buy,SPMO,2,140.93,281.86,satellite (momentum ETF)
+2026-09-30,buy,XLU 2028-01-21 50 call,2,0.91,182.00,"owner's plan: hold to 2026-12-31 (reason: earlier intel, not remembered); warning alert XLU <= 39.44 (price on 9/30)"
