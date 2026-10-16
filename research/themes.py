@@ -16,6 +16,13 @@ T = {"SMH":"Semiconductors","IGV":"Software","CIBR":"Cybersecurity","BOTZ":"Robo
      "GDX":"Gold miners","SLV":"Silver","XME":"Metals & mining","XOP":"Oil & gas producers","OIH":"Oil services",
      "XHB":"Homebuilders","XRT":"Retail","JETS":"Airlines","KRE":"Regional banks","XBI":"Biotech","IHI":"Medical devices",
      "IBIT":"Bitcoin","IPAY":"Payments/fintech","SPY":"S&P 500 (benchmark)"}
+# Owner's "2027 watch" list (pasted 2026-10-16 from an AI search summary citing Yahoo, InvestorPlace,
+# YouTube and Facebook posts: idea sources, not evidence). Tracked monthly next to the themes.
+WATCH = {"NVDA": "AI silicon", "MRVL": "AI silicon", "ARM": "AI silicon",
+         "CEG": "AI power", "VST": "AI power", "VRT": "AI power (cooling)",
+         "LLY": "Pharma", "BMY": "Pharma", "JAZZ": "Pharma",
+         "EWT": "Taiwan", "EWZ": "Brazil"}
+T.update(WATCH)
 since = dt.date.today() - dt.timedelta(days=430)
 rows = []
 for s, name in T.items():
