@@ -154,3 +154,16 @@ P/L per 1-lot trade includes ORATS's $0.65/contract commission (leg 1 of trade 1
 F1 and F2 already fail bars 2 and 3 on their own numbers. **All four pre-registered filters fail.**
 Per PHASE1_FINAL.md: Phase 1 ends with **"no edge found"** for 30-delta put credit spreads on SPY and KO,
 with or without trend/VIX filters, 2020-2026, at ORATS's default fills. What comes next is the owner's decision.
+
+## Owner's trend test: long calls / long puts (pre-registered in PHASE1_TREND_OPTIONS.md)
+| Run | Trades | Total (1 lot) | Avg/trade | Win % | Avg win / loss | PF | Oct 20-Dec 23 | Jan 24-Sep 26 |
+|---|---|---|---|---|---|---|---|---|
+| T2 SPY long put (below 50-day) | 86 (all rows) | **-$20,698** | -$241 | 23% | +$1,239 / -$689 | 0.54 | -$16,481 | -$4,216 |
+| T1 SPY long call (above 50-day) | pending | | | | | | | |
+
+- T2: every exit was the signal (trend flip or 21-day time stop), as planned. One exit (2025-11-26) filled at
+  12:26 instead of 10:00, presumably the first quote ORATS had. Only 2025 made money (+$3,120), almost all of it
+  from three entries in March 2025 that rode April's crash (+$10,207); without them, -$30,905.
+- Downtrends are where puts should shine, yet 2022 lost -$8,634: SPY kept bouncing back above its average
+  (trend-flip exits) after the puts had been bought at high prices (implied vol is highest in falls).
+- Verdict waits for T1: the pre-registered test scores calls and puts together.
