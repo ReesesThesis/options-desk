@@ -5,7 +5,11 @@
 Reads daily price CSVs (Nasdaq.com "Close/Last" or plain "Close"; Cboe VIX "CLOSE"; dates as
 YYYY-MM-DD or MM/DD/YYYY) and writes backtests/signals/<RUN>_dates.csv with one date per line.
 Every signal for day D uses only closes up to D-1 (entries are at 10:00 on D).
-The output columns get matched to ORATS's template once we've seen it.
+Output follows ORATS's intraday signal template (owner's download, 2026-10-16): columns
+"entry","exit", each YYYYMMDDHHMM. Exit = 16:00 on the last trading day within 30 calendar days of
+entry, i.e. no earlier than a 30-DTE expiration, so ORATS's own exits (profit target, expiration)
+should come first. Whether ORATS treats each row as its own (overlapping) trade is checked with
+signals/PROBE_SPY.csv before the real runs.
 """
 import csv, datetime as dt, os, statistics, sys
 
@@ -45,18 +49,33 @@ def vol_dates(vix, n=252):
 def keep(dates, trading_days):
     return [d for d in dates if START <= d <= END and d in trading_days]
 
-def write(name, dates):
+HOLD_DAYS = 30
+
+def stamp(d, hhmm):
+    return d.strftime("%Y%m%d") + hhmm
+
+def exit_day(d, trading_days, hold=HOLD_DAYS):
+    """Last trading day on or before d + hold calendar days."""
+    x = d + dt.timedelta(days=hold)
+    while x not in trading_days:
+        x -= dt.timedelta(days=1)
+    return x
+
+def rows(dates, trading_days):
+    return [(stamp(d, "1000"), stamp(exit_day(d, trading_days), "1600")) for d in dates]
+
+def write(name, dates, trading_days):
     os.makedirs(os.path.join(os.path.dirname(__file__), "signals"), exist_ok=True)
-    path = os.path.join(os.path.dirname(__file__), "signals", f"{name}_dates.csv")
+    path = os.path.join(os.path.dirname(__file__), "signals", f"{name}.csv")
     with open(path, "w", newline="") as f:
-        w = csv.writer(f); w.writerow(["date"]); w.writerows([[d.isoformat()] for d in dates])
+        w = csv.writer(f); w.writerow(["entry", "exit"]); w.writerows(rows(dates, trading_days))
     print(f"{name}: {len(dates)} entry days -> {path}")
 
 if __name__ == "__main__":
     spy, ko, vix = (load(p) for p in sys.argv[1:4])
     spy_days, ko_days = {d for d, _ in spy}, {d for d, _ in ko}
     v = vol_dates(vix)
-    write("F1_SPY_trend", keep(trend_dates(spy), spy_days))
-    write("F2_SPY_vol", keep(v, spy_days))
-    write("F3_KO_trend", keep(trend_dates(ko), ko_days))
-    write("F4_KO_vol", keep(v, ko_days))
+    write("F1_SPY_trend", keep(trend_dates(spy), spy_days), spy_days)
+    write("F2_SPY_vol", keep(v, spy_days), spy_days)
+    write("F3_KO_trend", keep(trend_dates(ko), ko_days), ko_days)
+    write("F4_KO_vol", keep(v, ko_days), ko_days)

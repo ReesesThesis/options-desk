@@ -20,5 +20,11 @@ class TestSignals(unittest.TestCase):
         self.assertIn(s[254][0], out)     # D-1 = 25 > median 20
         self.assertNotIn(s[255][0], out)  # D-1 = 15
 
+    def test_orats_rows(self):
+        days = {dt.date(2024, 1, 16), dt.date(2024, 2, 14), dt.date(2024, 2, 15)}
+        self.assertEqual(ms.rows([dt.date(2024, 1, 16)], days), [("202401161000", "202402151600")])
+        days.discard(dt.date(2024, 2, 15))  # exit falls back to the prior trading day
+        self.assertEqual(ms.rows([dt.date(2024, 1, 16)], days)[0][1], "202402141600")
+
 if __name__ == "__main__":
     unittest.main()
