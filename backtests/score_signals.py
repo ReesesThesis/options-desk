@@ -1,6 +1,6 @@
 """Score an ORATS trade log from a Phase 1 final run against the pre-registered pass bar.
 
-    python3 backtests/score_signals.py TradeLog.csv [--baseline results/F0_SPY_all.csv]
+    python3 backtests/score_signals.py TradeLog.csv [more logs, scored as one] [--baseline results/F0_SPY_all.csv]
 
 Finds which signal file the log came from (every entry date must be in it), then prints trades,
 total, average, win rate, profit factor, both halves, and P/L by year. Profits in ORATS logs
@@ -27,7 +27,7 @@ def source(ts):
     ent = {t["date"].strftime("%Y%m%d") for t in ts}
     tick = ts[0]["ticker"]
     hits = []
-    for p in sorted(glob.glob(os.path.join(HERE, "signals", "F*.csv"))):
+    for p in sorted(glob.glob(os.path.join(HERE, "signals", "[FT]*.csv"))):
         name = os.path.basename(p)[:-4]
         if f"_{tick}_" not in name:
             continue
@@ -55,13 +55,18 @@ def halves(ts):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("log")
+    ap.add_argument("logs", nargs="+")
     ap.add_argument("--baseline")
     a = ap.parse_args()
-    ts = trades(a.log)
-    hits = source(ts)
-    # the most specific match is the smallest file that still holds every entry
-    print("source:", ", ".join(f"{n} ({k} rows)" for n, k in sorted(hits, key=lambda h: h[1])) or "UNKNOWN")
+    ts = []
+    for log in a.logs:
+        part = trades(log)
+        hits = source(part)
+        # the most specific match is the smallest file that still holds every entry
+        print(f"source of {os.path.basename(log)}:",
+              ", ".join(f"{n} ({k} rows)" for n, k in sorted(hits, key=lambda h: h[1])) or "UNKNOWN")
+        ts += part
+    ts.sort(key=lambda t: t["date"])
     s = stats(ts); h1, h2 = halves(ts)
     print(line("all", s)); print(line("Oct 20 - Dec 23", h1)); print(line("Jan 24 - Oct 26", h2))
     for y in sorted({t["date"].year for t in ts}):
