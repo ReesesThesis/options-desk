@@ -1,0 +1,24 @@
+{
+ "periods": [
+  {
+   "decided": "2026-10-16",
+   "picks": [
+    "INTC",
+    "AMD",
+    "AMAT",
+    "TGT",
+    "MRK"
+   ],
+   "momentum": {
+    "INTC": 1.9287,
+    "AMD": 1.2845,
+    "AMAT": 0.8341,
+    "TGT": 0.7581,
+    "MRK": 0.7495
+   },
+   "entry": null,
+   "exit": null
+  }
+ ],
+ "finished": false
+}
