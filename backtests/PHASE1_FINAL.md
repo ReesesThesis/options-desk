@@ -37,3 +37,20 @@ options with a larger account.
 - VIX daily history (Cboe's free VIX_History.csv).
 - ORATS's signal CSV template ("Download CSV template" under Upload signal CSV).
 Claude builds the four signal files from these with `backtests/make_signals.py`.
+
+## Amendment, 2026-10-16 (owner approved; written before any F run)
+A 3-row probe (`signals/PROBE_SPY.csv`, log in `results/PROBE_SPY.csv`) showed how ORATS reads a
+signal file: **each row can open its own trade while others are still open** (2 open on
+2024-01-18), and the "exit" time forces a close ("Signal Exit") unless ORATS's profit target or
+expiration comes first. So filtered runs hold many overlapping trades, unlike R7/D2, which held
+one at a time. Comparing them to R7/D2 would be unfair, so:
+- **New baselines:** F0 SPY and F0 KO enter **every trading day** (same settings, same file
+  format). Pass-bar item 4 now reads "better than F0 on the same stock in both halves".
+- Signal rows: entry 10:00 on D; exit 16:00 on the last trading day within 30 calendar days
+  (after any 30-DTE expiration, so ORATS's own exits decide). Entries stop 30 days before the
+  data ends (last entry 2026-09-15) so no trade gets a cut-short forced exit.
+- Overlapping trades are correlated, so "60+ trades" is weaker evidence than it sounds; the
+  two-halves and profit-factor items carry the weight. Compare per-trade averages as well as totals.
+- Runs: F0 SPY, F1, F2 (SPY $5 wide, PTS OTM 5) and F0 KO, F3, F4 (KO $1 wide, PTS OTM 1); all
+  other settings unchanged; ORATS date range set to All.
+Everything else above stands.

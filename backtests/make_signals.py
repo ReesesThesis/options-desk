@@ -8,8 +8,8 @@ Every signal for day D uses only closes up to D-1 (entries are at 10:00 on D).
 Output follows ORATS's intraday signal template (owner's download, 2026-10-16): columns
 "entry","exit", each YYYYMMDDHHMM. Exit = 16:00 on the last trading day within 30 calendar days of
 entry, i.e. no earlier than a 30-DTE expiration, so ORATS's own exits (profit target, expiration)
-should come first. Whether ORATS treats each row as its own (overlapping) trade is checked with
-signals/PROBE_SPY.csv before the real runs.
+should come first. Probe run 2026-10-16 (results/PROBE_SPY.csv): rows can open overlapping trades, and ORATS
+closes at the exit time ("Signal Exit") unless its profit target or expiration comes first.
 """
 import csv, datetime as dt, os, statistics, sys
 
@@ -47,7 +47,9 @@ def vol_dates(vix, n=252):
     return out
 
 def keep(dates, trading_days):
-    return [d for d in dates if START <= d <= END and d in trading_days]
+    """Entries from START on, and only while a full 30-day window fits in the data (no truncated exits)."""
+    last = min(END, max(trading_days)) - dt.timedelta(days=HOLD_DAYS)
+    return [d for d in dates if START <= d <= last and d in trading_days]
 
 HOLD_DAYS = 30
 
@@ -75,6 +77,9 @@ if __name__ == "__main__":
     spy, ko, vix = (load(p) for p in sys.argv[1:4])
     spy_days, ko_days = {d for d, _ in spy}, {d for d, _ in ko}
     v = vol_dates(vix)
+    # Amendment 2026-10-16: unfiltered "enter every day" baselines (see PHASE1_FINAL.md)
+    write("F0_SPY_all", keep(sorted(spy_days), spy_days), spy_days)
+    write("F0_KO_all", keep(sorted(ko_days), ko_days), ko_days)
     write("F1_SPY_trend", keep(trend_dates(spy), spy_days), spy_days)
     write("F2_SPY_vol", keep(v, spy_days), spy_days)
     write("F3_KO_trend", keep(trend_dates(ko), ko_days), ko_days)

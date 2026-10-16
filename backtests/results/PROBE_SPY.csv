@@ -1,0 +1,5 @@
+tradeId,date,entryTime,ticker,leg,ratio,optionType,strike,expiry,expiryTod,dte,tradeOptPx,delta,entryStockPx,exitDate,exitTime,exitQuoteTime,exitStockPx,exitOptionPx,profit,exitReason,margin,expirDate
+1,2024-01-16,1000,SPY,1,-1,put,469,2024-02-09,pm,25,3.34,-0.3063,474.33,2024-01-18,1600,15:59:50,476.63,2.63,69.72,Signal Exit,394.98,2024-02-09
+1,2024-01-16,1000,SPY,2,1,put,464,2024-02-09,pm,25,2.29,-0.2225,474.33,2024-01-18,1600,15:59:50,476.63,1.77,-53.94,Signal Exit,,2024-02-09
+2,2024-01-18,1000,SPY,1,-1,put,466,2024-02-16,pm,30,3.35,-0.2952,473.82,2024-01-19,1409,14:08:34,481.9,1.72,162.38,Profit Target,407.32,2024-02-16
+2,2024-01-18,1000,SPY,2,1,put,461,2024-02-16,pm,30,2.43,-0.2283,473.82,2024-01-19,1409,14:08:34,481.9,1.25,-118.62,Profit Target,,2024-02-16
