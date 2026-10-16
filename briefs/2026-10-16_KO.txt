@@ -1,0 +1,51 @@
+TRADE CARD: KO bull put spread   (as of 2026-10-16, stock $93.62)
+========================================================================
+PAPER TRADE (phase 0): track it, don't put money on it yet.
+Thesis: Phase 0 numbers check only. KO $93.62, above its 50-day average ($88.30); short put at -0.26 delta (rule target 0.30).
+
+DO NOT TRADE AS WRITTEN:
+  - SIZE: one contract risks $205; limit is $60 (hard cap / open-risk room). Use a narrower spread or skip.
+
+ENTER
+  Sell 2026-11-20 $90 put / Buy 2026-11-20 $87.5 put   (35 DTE)
+  One combo order, Limit credit $0.47 (credit at least). Can't get it? Skip; don't chase.
+  Model credit at mid: $0.47
+  Size: 0 contracts
+  Don't enter if: this is a Phase 0 check: don't submit it
+  Don't enter if: KO's Q3 earnings date is still MISSING
+
+NUMBERS (per contract)
+  Max profit $48   Max loss $202   Breakeven $89.53
+  Delta +10.5 sh   Gamma -1.53   Theta $+0.63/day   Vega $-2.60/vol pt
+  Model P/L by stock move:            -5%      +0%      +5%
+        now, IV -10 pts             -56      +32      +47
+        now, IV  +0 pts             -64       +0      +33
+        now, IV +10 pts             -68      -20      +13
+     in 17d, IV -10 pts             -59      +42      +47
+     in 17d, IV  +0 pts             -66      +16      +43
+     in 17d, IV +10 pts             -69       -6      +30
+
+RIGHT AFTER YOU'RE FILLED (Webull)
+  1. ORDER  Buy-to-close the whole position as ONE combo order, Limit $0.24, GTC   <- take profit (~50%)
+           (Re-figure this from your actual fill: tell Claude 'filled at $X'.)
+  2. ALERT  KO > Alerts > Price falls to $91.72   "KO: warning, re-check thesis"
+  3. ALERT  KO > Alerts > Price falls to $90.00   "KO: CLOSE IT"   <- hard stop
+  4. DATE   2026-10-30: close if the target hasn't hit (21 DTE). Phone reminder; the afternoon brief also flags it.
+  No stop ORDER on the options themselves: wide option quotes trigger stops on a bad print.
+
+WHY THESE LEVELS
+  $90 = short strike: a close below it means the spread is losing at expiry.
+  $91.72 = Oct 15 low (Schwab $91.715), the last pullback before today's +1.7%: losing it undoes the bounce.
+  The 50-day average ($88.30, closes through Oct 15) is below the stop, so it isn't an alert level here.
+
+NEWS & EVENTS (KO)
+  ! Q3 earnings date MISSING (last year 2025-10-21; option IVs point to the week of Oct 26). Almost certainly INSIDE this trade  [SEC 8-K item 2.02 history; Schwab IVs]
+  ! Next ex-dividend date MISSING: check KO investor relations before any real trade (early assignment risk on the short put is low, but the date belongs on the card)  [not checked]
+  ! Macro dates (FOMC, CPI, jobs) inside Oct 16 - Nov 20: MISSING, no calendar source wired in yet  [not checked]
+  - No watched SEC filings in the last 30 days (Form 144s and a 25-NSE only)  [https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000021344]
+
+RED FLAGS
+  - $2.50 wide is the narrowest KO width with open interest >= 500 (Nov weeklies with $1 strikes have OI 18-635 and wide quotes)
+  - Phase 1 found no edge in 30-delta put spreads on KO (D2: -$465 over 145 trades)
+
+Research, not advice. You place the trade; numbers are model estimates from the quotes above.

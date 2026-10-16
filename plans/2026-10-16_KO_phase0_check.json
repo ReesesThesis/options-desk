@@ -1,0 +1,71 @@
+{
+  "_note": "PHASE 0 CHECK CARD: Schwab quotes at 11:42 ET 2026-10-16. Built to compare card math with Webull's order screen, not as a trade.",
+  "ticker": "KO",
+  "structure": "bull put spread",
+  "as_of": "2026-10-16",
+  "spot": 93.62,
+  "thesis": "Phase 0 numbers check only. KO $93.62, above its 50-day average ($88.30); short put at -0.26 delta (rule target 0.30).",
+  "legs": [
+    {
+      "action": "sell",
+      "type": "put",
+      "strike": 90,
+      "expiry": "2026-11-20",
+      "price": 0.98,
+      "bid": 0.95,
+      "ask": 1.01,
+      "oi": 2205
+    },
+    {
+      "action": "buy",
+      "type": "put",
+      "strike": 87.5,
+      "expiry": "2026-11-20",
+      "price": 0.505,
+      "bid": 0.49,
+      "ask": 0.52,
+      "oi": 3577
+    }
+  ],
+  "entry_limit": 0.47,
+  "take_profit_pct": 50,
+  "warning_level": 91.72,
+  "stop_level": 90.0,
+  "stop_direction": "below",
+  "time_stop_dte": 21,
+  "skip_if": [
+    "this is a Phase 0 check: don't submit it",
+    "KO's Q3 earnings date is still MISSING"
+  ],
+  "why": [
+    "$90 = short strike: a close below it means the spread is losing at expiry.",
+    "$91.72 = Oct 15 low (Schwab $91.715), the last pullback before today's +1.7%: losing it undoes the bounce.",
+    "The 50-day average ($88.30, closes through Oct 15) is below the stop, so it isn't an alert level here."
+  ],
+  "events": [
+    {
+      "flag": "warn",
+      "text": "Q3 earnings date MISSING (last year 2025-10-21; option IVs point to the week of Oct 26). Almost certainly INSIDE this trade",
+      "source": "SEC 8-K item 2.02 history; Schwab IVs"
+    },
+    {
+      "flag": "warn",
+      "text": "Next ex-dividend date MISSING: check KO investor relations before any real trade (early assignment risk on the short put is low, but the date belongs on the card)",
+      "source": "not checked"
+    },
+    {
+      "flag": "warn",
+      "text": "Macro dates (FOMC, CPI, jobs) inside Oct 16 - Nov 20: MISSING, no calendar source wired in yet",
+      "source": "not checked"
+    },
+    {
+      "flag": "info",
+      "text": "No watched SEC filings in the last 30 days (Form 144s and a 25-NSE only)",
+      "source": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000021344"
+    }
+  ],
+  "red_flags": [
+    "$2.50 wide is the narrowest KO width with open interest >= 500 (Nov weeklies with $1 strikes have OI 18-635 and wide quotes)",
+    "Phase 1 found no edge in 30-delta put spreads on KO (D2: -$465 over 145 trades)"
+  ]
+}
