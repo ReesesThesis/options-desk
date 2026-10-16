@@ -1,0 +1,3 @@
+# 15 well-known 2020-21 high-flyers, written 2026-10-16 from memory. Chosen KNOWING many later
+# crashed: biased in favor of stops (see STOCK_STOPS.md). XYZ = Block (formerly SQ).
+MRNA BNTX NVAX ZM PTON DOCU ROKU SHOP XYZ TDOC PLUG ETSY SNOW COIN CRWD
