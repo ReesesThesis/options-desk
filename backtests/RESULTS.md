@@ -134,10 +134,15 @@ P/L per 1-lot trade includes ORATS's $0.65/contract commission (leg 1 of trade 1
 
 | Run | Trades | Total | Avg/trade | Win % | Avg win / loss | PF | Oct 20-Dec 23 | Jan 24-Oct 26 | Verdict |
 |---|---|---|---|---|---|---|---|---|---|
+| F1 SPY $5, trend filter | 846 (of 1,078 rows) | +$1,810 | +$2.14 | 89% | +$48 / -$392 | 1.05 | **-$2,853** (PF 0.86) | +$4,663 (PF 1.32) | **FAIL** (bars 2 and 3) |
 | F2 SPY $5, VIX filter | 462 (of 638 rows) | +$2,794 | +$6.05 | 89% | +$54 / -$392 | 1.14 | **-$4,059** (PF 0.67) | +$6,852 (PF 1.95) | **FAIL** (bar 2: first half loses; bar 3: PF < 1.2) |
 
 - F2 by year: 2020 +$1,337, 2021 +$1,495, **2022 -$7,327** (120 trades), 2023 +$437 (8), 2024 +$4,587, 2025 +$1,939, 2026 +$327.
   "VIX above its 1-year median" put most entries into the 2022 bear market, where 30-delta puts kept getting run over.
+- F1 by year: 2020 +$2,174, 2021 +$3,351, **2022 -$8,461** (65 trades, 58% wins), 2023 +$83, 2024 -$774,
+  2025 +$3,240, 2026 +$2,196. Being above the 50-day average didn't keep it out of 2022's losses (bear-market rallies).
+  Identified as F1, not F0: all 846 entries are trend-filter days; none fall on the 417 days F1 excludes.
+- Scoring: `python3 backtests/score_signals.py LOG [--baseline F0 log]`.
 - Up to 17 trades open at once. 176 signal rows opened no trade; 163 of them fell on days when another
   trade was already open (ORATS seems to skip some overlaps; rule **UNVERIFIED**). F0 runs under the same mechanics.
 - Exits: 411 profit target, 50 expiration, 1 stop.
