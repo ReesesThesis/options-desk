@@ -193,3 +193,21 @@ Price returns (no dividends) for everything, 0.05% per trade, cash 0%, fills at 
   momentum fund) +317%: these years rewarded big tech, which flatters momentum too.
 - So real-world momentum here ranged from "same as SPY" to "clearly better", nowhere near +966%.
   Momentum also has long losing stretches (it lagged SPY by 15+ points in 2021 and 2023 in MTUM).
+
+# Trailing stops on hot stocks (pre-registered in STOCK_STOPS.md; output in results/stock_stops.txt)
+| | No stop | Stop 15% | Stop 20% | Stop 25% |
+|---|---|---|---|---|
+| U1 giants (biased against stops): total / maxDD / stop-outs | +966% / -37% | +560% / -43% / 87 | +754% / -43% / 42 | +914% / -37% / 17 |
+| U2 + 15 hot 2020 names (biased for stops) | +3,725% / -55% | +1,304% / -60% / 154 | +2,269% / -61% / 89 | +2,877% / -60% / 46 |
+
+**All three levels FAIL on both lists**, and in both halves. Stops didn't even reduce the worst drawdown
+(it got worse: they sold near local lows, then the ranking bought back higher).
+(The totals themselves are absurd because the lists are hindsight-picked; only the stop vs no-stop
+comparison means anything.)
+
+**Why (diagnostic):** the momentum ranking was already the exit. A stock that starts falling loses its
+top-5 rank within a month or two, so the rule usually sold the 2020 high-flyers 10-35% off their peaks,
+before the real collapse: PTON sold 2021-06-01, then fell another 89% within a year; ZM sold
+2021-03-01, then -69%; NVAX sold 2021-07-01 with a +366% gain, then -83%; MRNA sold 2022-02-01, then -33%.
+A % stop on top of that mostly added sales on ordinary dips (up to 154 extra stop-outs) in stocks
+that then kept rising.

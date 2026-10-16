@@ -1,0 +1,33 @@
+U1 giants: no stop         total +966.5%  CAGR +36.4%  H1 +123.0%  H2 +378.3%  maxDD -37.1%  trades 587
+                           2019 +23%  2020 +114%  2021 -6%  2022 -10%  2023 +29%  2024 +102%  2025 +16%  2026 +58%
+U1 giants: stop 15%        total +560.4%  CAGR +28.1%  H1  +83.8%  H2 +259.4%  maxDD -42.8%  trades 652
+                           2019 +20%  2020 +102%  2021 -14%  2022 -12%  2023 +28%  2024 +81%  2025 -7%  2026 +68%
+                           stop-outs 87
+                           beats no-stop in both halves: NO
+U1 giants: stop 20%        total +754.4%  CAGR +32.5%  H1  +82.3%  H2 +368.7%  maxDD -43.1%  trades 616
+                           2019 +23%  2020 +93%  2021 -11%  2022 -13%  2023 +29%  2024 +100%  2025 +10%  2026 +64%
+                           stop-outs 42
+                           beats no-stop in both halves: NO
+U1 giants: stop 25%        total +913.5%  CAGR +35.5%  H1 +102.3%  H2 +401.0%  maxDD -36.8%  trades 602
+                           2019 +23%  2020 +93%  2021 -6%  2022 -10%  2023 +29%  2024 +101%  2025 +16%  2026 +66%
+                           stop-outs 17
+                           beats no-stop in both halves: NO
+
+U2 +hot2020: no stop       total +3725.1%  CAGR +61.3%  H1 +437.3%  H2 +611.9%  maxDD -54.7%  trades 584
+                           2019 +46%  2020 +231%  2021 +36%  2022 -18%  2023 +30%  2024 +97%  2025 +29%  2026 +117%
+U2 +hot2020: stop 15%      total +1303.6%  CAGR +41.4%  H1 +191.3%  H2 +381.8%  maxDD -60.4%  trades 697
+                           2019 +46%  2020 +137%  2021 -2%  2022 -14%  2023 +25%  2024 +85%  2025 -9%  2026 +130%
+                           stop-outs 154
+                           beats no-stop in both halves: NO
+U2 +hot2020: stop 20%      total +2268.8%  CAGR +51.4%  H1 +262.5%  H2 +553.5%  maxDD -60.5%  trades 654
+                           2019 +47%  2020 +180%  2021 +9%  2022 -19%  2023 +24%  2024 +100%  2025 +16%  2026 +129%
+                           stop-outs 89
+                           beats no-stop in both halves: NO
+U2 +hot2020: stop 25%      total +2877.2%  CAGR +56.1%  H1 +302.3%  H2 +640.0%  maxDD -59.6%  trades 622
+                           2019 +48%  2020 +210%  2021 +6%  2022 -17%  2023 +30%  2024 +100%  2025 +24%  2026 +129%
+                           stop-outs 46
+                           beats no-stop in both halves: NO
+
+stop 15%: FAIL (U1 no, U2 no)
+stop 20%: FAIL (U1 no, U2 no)
+stop 25%: FAIL (U1 no, U2 no)

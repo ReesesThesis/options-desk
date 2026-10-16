@@ -33,6 +33,14 @@ def simulate(cal, prices, decide):
         for s, p in prices.items():
             if d in p:
                 last_close[s] = p[d][1]
+        if pending is not None and "_sell" in pending:
+            # sell only these holdings to cash; leave the rest untouched (stop-outs)
+            for s in pending["_sell"]:
+                if s in shares:
+                    px_open = prices[s][d][0] if d in prices[s] else last_close[s]
+                    cash += shares.pop(s) * px_open * (1 - COST)
+                    trades += 1
+            pending = None
         if pending is not None:
             opens = {s: prices[s][d][0] if d in prices[s] else last_close[s] for s in set(shares) | set(pending)}
             value = cash + sum(n * opens[s] for s, n in shares.items())
