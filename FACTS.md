@@ -47,6 +47,7 @@ and never let the owner spend money or place a trade on it until it's verified.
 | ORATS signal rows open **overlapping** trades (2 open at once on 2024-01-18), and a row's exit time forces the close ("Signal Exit") unless the profit target/expiration hit first. One of 3 rows (2024-01-17) opened no trade; reason **UNVERIFIED** (likely the wide bid-ask filter) | VERIFIED | probe run, `backtests/results/PROBE_SPY.csv` | 2026-10-16 |
 | SPMO (Invesco S&P 500 Momentum ETF) and MTUM (iShares MSCI USA Momentum Factor ETF): price history from Schwab (in backtests/data/). Their expense ratios, holdings rules and rebalancing schedule are **UNVERIFIED**: read the issuer's fund page before buying | Prices VERIFIED (Schwab); fund details **UNVERIFIED** | Schwab API | 2026-10-16 |
 | Webull fractional shares for ETFs (needed to split a few hundred dollars across funds) | **UNVERIFIED** | memory | 2026-10-16 |
+| Owner's first holdings (Webull, filled 2026-10-16): 2 SPY @ $762.49 and 2 SPMO @ $140.93, $1,806.84 total (84.4% / 15.6%). Fills fall inside each fund's 2026-10-16 range on Schwab (SPY 760.64-773.25, SPMO 140.64-143.58). Log: journal/holdings.csv | VERIFIED (owner's fills; range checked on Schwab) | owner + Schwab API | 2026-10-16 |
 
 Research claims used in CLAUDE.md (retail option losses, Pan & Poteshman, variance risk premium)
 come from paper abstracts and secondary summaries; cite them as such.
