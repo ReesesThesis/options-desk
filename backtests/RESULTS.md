@@ -159,11 +159,16 @@ with or without trend/VIX filters, 2020-2026, at ORATS's default fills. What com
 | Run | Trades | Total (1 lot) | Avg/trade | Win % | Avg win / loss | PF | Oct 20-Dec 23 | Jan 24-Sep 26 |
 |---|---|---|---|---|---|---|---|---|
 | T2 SPY long put (below 50-day) | 86 (all rows) | **-$20,698** | -$241 | 23% | +$1,239 / -$689 | 0.54 | -$16,481 | -$4,216 |
-| T1 SPY long call (above 50-day) | pending | | | | | | | |
+| T1 SPY long call (above 50-day) | 224 (of 225 rows) | -$696 | -$3 | 40% | +$649 / -$433 | 0.99 | -$5,888 | +$5,191 |
+| **T1 + T2 together (the test)** | 310 | **-$21,394** | -$69 | 35% | +$757 / -$517 | 0.79 | -$22,369 | +$975 |
 
 - T2: every exit was the signal (trend flip or 21-day time stop), as planned. One exit (2025-11-26) filled at
   12:26 instead of 10:00, presumably the first quote ORATS had. Only 2025 made money (+$3,120), almost all of it
   from three entries in March 2025 that rode April's crash (+$10,207); without them, -$30,905.
 - Downtrends are where puts should shine, yet 2022 lost -$8,634: SPY kept bouncing back above its average
   (trend-flip exits) after the puts had been bought at high prices (implied vol is highest in falls).
-- Verdict waits for T1: the pre-registered test scores calls and puts together.
+- T1 calls by year: 2020 -$921, 2021 -$1,266, **2022 -$9,499** (18 trades, 1 win), 2023 +$5,798, 2024 +$6,438,
+  2025 +$2,194, 2026 -$3,440. Calls roughly broke even over six years while SPY itself nearly doubled.
+- **Verdict: FAIL** (first half -$22,369; profit factor 0.79). Per the pre-registration, the idea is closed:
+  no debit-spread follow-up.
+
