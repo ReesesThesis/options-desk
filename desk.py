@@ -22,7 +22,8 @@ def cmd_card(a, cfg):
         print(f"\nsaved {out}")
 
 def cmd_context(a, cfg):
-    from desk import schwab
+    from desk import bs, schwab
+    r = cfg.get("risk_free_rate", 0.04)
     t = a.ticker.upper()
     closes = [c for _, c in schwab.daily_closes(t)]
     ch = schwab.chain(t, dt.date.today(), dt.date.today() + dt.timedelta(days=60), strike_count=6)
@@ -40,7 +41,10 @@ def cmd_context(a, cfg):
             continue
         em = vol.expected_move_from_straddle(c["mark"], p["mark"])
         days = (dt.date.fromisoformat(exp) - dt.date.today()).days
-        ivs = [x["iv"] for x in (c, p) if x["iv"]]
+        # IV solved from each leg's mark: Schwab's own IV field jumps ~2.5 pts across the money
+        # (KO 2026-10-16), while this matched Webull within 0.4 pts (FACTS.md)
+        T = max(days, 1) / 365.0
+        ivs = [v for x in (c, p) if (v := bs.implied_vol(x["type"], x["mark"], spot, x["strike"], T, r))]
         iv = sum(ivs) / len(ivs) if ivs else 0.0
         print(f"  {exp} ({days:>2}d)  ATM {atm:g}  IV {iv:.1%}  straddle ${em['straddle']:.2f}"
               f"  ~1sd move ${em['one_sd']:.2f} ({em['one_sd'] / spot:.1%})")
