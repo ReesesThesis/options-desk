@@ -127,3 +127,17 @@ order, not the harsh 75% we intended. The verdicts stand: these rules lose at or
   even if it were profitable.
 - So it isn't only account size: 30-delta, 30-DTE put spreads on SPY were about break-even after
   realistic costs in 2020-2026.
+
+## Phase 1 final round (pre-registered in PHASE1_FINAL.md, amended 2026-10-16)
+Each signal row can open its own trade (overlapping); compare each filter with F0 on the same stock.
+P/L per 1-lot trade includes ORATS's $0.65/contract commission (leg 1 of trade 1: (5.16-1.99) x 100 - 1.30 = 315.70; log 315.76).
+
+| Run | Trades | Total | Avg/trade | Win % | Avg win / loss | PF | Oct 20-Dec 23 | Jan 24-Oct 26 | Verdict |
+|---|---|---|---|---|---|---|---|---|---|
+| F2 SPY $5, VIX filter | 462 (of 638 rows) | +$2,794 | +$6.05 | 89% | +$54 / -$392 | 1.14 | **-$4,059** (PF 0.67) | +$6,852 (PF 1.95) | **FAIL** (bar 2: first half loses; bar 3: PF < 1.2) |
+
+- F2 by year: 2020 +$1,337, 2021 +$1,495, **2022 -$7,327** (120 trades), 2023 +$437 (8), 2024 +$4,587, 2025 +$1,939, 2026 +$327.
+  "VIX above its 1-year median" put most entries into the 2022 bear market, where 30-delta puts kept getting run over.
+- Up to 17 trades open at once. 176 signal rows opened no trade; 163 of them fell on days when another
+  trade was already open (ORATS seems to skip some overlaps; rule **UNVERIFIED**). F0 runs under the same mechanics.
+- Exits: 411 profit target, 50 expiration, 1 stop.
