@@ -135,6 +135,9 @@ P/L per 1-lot trade includes ORATS's $0.65/contract commission (leg 1 of trade 1
 | Run | Trades | Total | Avg/trade | Win % | Avg win / loss | PF | Oct 20-Dec 23 | Jan 24-Oct 26 | Verdict |
 |---|---|---|---|---|---|---|---|---|---|
 | F1 SPY $5, trend filter | 846 (of 1,078 rows) | +$1,810 | +$2.14 | 89% | +$48 / -$392 | 1.05 | **-$2,853** (PF 0.86) | +$4,663 (PF 1.32) | **FAIL** (bars 2 and 3) |
+| F0 KO $1, every day (baseline) | 884 (of 1,495 rows) | -$2,248 | -$2.54 | 88% | +$8 / -$77 | 0.73 | -$2,166 (PF 0.61) | -$82 (PF 0.97) | **FAIL** (baseline) |
+| F3 KO $1, trend filter | 529 (of 920 rows) | -$1,004 | -$1.90 | 89% | +$8 / -$77 | 0.78 | -$1,339 (PF 0.59) | +$335 (PF 1.24) | **FAIL** (bars 2, 3, 4: H1 -$4.40/trade vs F0 -$4.13) |
+| F4 KO $1, VIX filter | 370 (of 638 rows) | -$607 | -$1.64 | 89% | +$8 / -$79 | 0.81 | -$411 (PF 0.74) | -$196 (PF 0.88) | **FAIL** (bars 2, 3, 4: H2 -$1.04/trade vs F0 -$0.23) |
 | F2 SPY $5, VIX filter | 462 (of 638 rows) | +$2,794 | +$6.05 | 89% | +$54 / -$392 | 1.14 | **-$4,059** (PF 0.67) | +$6,852 (PF 1.95) | **FAIL** (bar 2: first half loses; bar 3: PF < 1.2) |
 
 - F2 by year: 2020 +$1,337, 2021 +$1,495, **2022 -$7,327** (120 trades), 2023 +$437 (8), 2024 +$4,587, 2025 +$1,939, 2026 +$327.
@@ -146,3 +149,8 @@ P/L per 1-lot trade includes ORATS's $0.65/contract commission (leg 1 of trade 1
 - Up to 17 trades open at once. 176 signal rows opened no trade; 163 of them fell on days when another
   trade was already open (ORATS seems to skip some overlaps; rule **UNVERIFIED**). F0 runs under the same mechanics.
 - Exits: 411 profit target, 50 expiration, 1 stop.
+
+**F0 SPY did not finish** (ORATS timed out on the 1,495-row file, 2026-10-16). It can't change any verdict:
+F1 and F2 already fail bars 2 and 3 on their own numbers. **All four pre-registered filters fail.**
+Per PHASE1_FINAL.md: Phase 1 ends with **"no edge found"** for 30-delta put credit spreads on SPY and KO,
+with or without trend/VIX filters, 2020-2026, at ORATS's default fills. What comes next is the owner's decision.
