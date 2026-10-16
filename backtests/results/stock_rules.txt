@@ -1,0 +1,24 @@
+S1 SPY 200-day trend       total  +96.7%  CAGR +10.2%  H1  +21.0%  H2  +62.5%  maxDD -22.8%  trades 43
+                           2019 +8%  2020 +7%  2021 +27%  2022 -17%  2023 +9%  2024 +23%  2025 +10%  2026 +10%
+  vs hold SPY              total +158.0%  CAGR +14.5%  H1  +27.8%  H2 +101.9%  maxDD -34.1%
+                           2019 +8%  2020 +16%  2021 +27%  2022 -19%  2023 +24%  2024 +23%  2025 +16%  2026 +13%
+                           beats hold SPY in both halves: NO
+                           VERDICT: FAIL
+
+S2 sector rotation         total +139.9%  CAGR +12.4%  H1  +48.9%  H2  +61.1%  maxDD -32.5%  trades 381
+                           2019 +3%  2020 +19%  2021 +29%  2022 -6%  2023 +26%  2024 +13%  2025 +5%  2026 +8%
+  vs hold SPY              total +164.6%  CAGR +13.9%  H1  +31.1%  H2 +101.9%  maxDD -34.1%
+                           2019 +10%  2020 +16%  2021 +27%  2022 -19%  2023 +24%  2024 +23%  2025 +16%  2026 +13%
+                           beats hold SPY in both halves: NO
+                           VERDICT: FAIL
+
+S3 momentum top 5          total +966.5%  CAGR +36.4%  H1 +123.0%  H2 +378.3%  maxDD -37.1%  trades 587
+                           2019 +23%  2020 +114%  2021 -6%  2022 -10%  2023 +29%  2024 +102%  2025 +16%  2026 +58%
+  vs hold SPY              total +175.3%  CAGR +14.2%  H1  +36.4%  H2 +101.8%  maxDD -34.1%
+                           2019 +15%  2020 +16%  2021 +27%  2022 -19%  2023 +24%  2024 +23%  2025 +16%  2026 +13%
+                           beats hold SPY in both halves: YES
+  vs equal-weight universe total +191.1%  CAGR +15.0%  H1  +54.7%  H2  +88.2%  maxDD -34.4%
+                           2019 +17%  2020 +21%  2021 +27%  2022 -14%  2023 +22%  2024 +19%  2025 +16%  2026 +12%
+                           beats equal-weight universe in both halves: YES
+                           VERDICT: PASS
+

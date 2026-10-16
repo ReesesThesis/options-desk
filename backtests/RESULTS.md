@@ -172,3 +172,24 @@ with or without trend/VIX filters, 2020-2026, at ORATS's default fills. What com
 - **Verdict: FAIL** (first half -$22,369; profit factor 0.79). Per the pre-registration, the idea is closed:
   no debit-spread follow-up.
 
+
+# Stock rules (pre-registered in STOCK_RULES.md, run 2026-10-16; output in results/stock_rules.txt)
+Price returns (no dividends) for everything, 0.05% per trade, cash 0%, fills at next open.
+
+| Rule | Total | CAGR | H1 (to Dec 22) | H2 (2023 on) | Max DD | Benchmark (total / H1 / H2 / DD) | Verdict |
+|---|---|---|---|---|---|---|---|
+| S1 SPY 200-day trend | +97% | 10.2% | +21% | +63% | -23% | SPY +158% / +28% / +102% / -34% | **FAIL** (smaller drawdown, but missed rebounds, e.g. 2020 +7% vs +16%, 2023 +9% vs +24%) |
+| S2 sector rotation, top 3 of 11 | +140% | 12.4% | +49% | +61% | -33% | SPY +165% / +31% / +102% / -34% | **FAIL** (won H1, lost H2 badly) |
+| S3 momentum, top 5 of ~100 big stocks | +966% | 36.4% | +123% | +378% | -37% | SPY +175% / +36% / +102%; equal-weight list +191% / +55% / +88% | **PASS** as written, but see below |
+
+**S3 is heavily flattered by hindsight (diagnostics, after the verdict; they don't change it):**
+- Most-held: NVDA 43 months, AMD 37, PLTR 28, TSLA 25. Without NVDA, PLTR, TSLA and AVGO it is still
+  +350% vs the equal-weight list's +159%, and still ahead in both halves.
+- But the list is today's giants. It leaves out stocks that had huge runs and then collapsed (2020's
+  pandemic winners), which a real momentum rule would have bought. No check on this list can fix that.
+- **Unbiased reality check: real momentum funds over the same dates (Mar 2019 - Oct 2026, price only):**
+  MTUM +172% vs SPY +175% (tied; behind by 15+ pts in 2021 and 2023); SPMO (S&P 500 momentum) +274%
+  (ahead in both halves: H1 +47% vs +36%, H2 +154% vs +102%). For comparison QQQ (Nasdaq 100, not a
+  momentum fund) +317%: these years rewarded big tech, which flatters momentum too.
+- So real-world momentum here ranged from "same as SPY" to "clearly better", nowhere near +966%.
+  Momentum also has long losing stretches (it lagged SPY by 15+ points in 2021 and 2023 in MTUM).
